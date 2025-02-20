@@ -12,6 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 999
+          fetch-depth: 0
       - uses: astral-sh/setup-uv@v5
       - run: uvx --from python-semantic-release psr -v -v -v version
