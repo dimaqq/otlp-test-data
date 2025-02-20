@@ -40,7 +40,12 @@ jobs:
           uv python install 3.13
           uv build --sdist --wheel
           rm -vf dist/.gitignore  # https://github.com/astral-sh/uv/issues/11652
-      #- uses: pypa/gh-action-pypi-publish@release/v1
-        #with:
-          #repository-url: https://test.pypi.org/legacy/
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          skip-existing: true
+          verbose: true
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
+          verbose: true
