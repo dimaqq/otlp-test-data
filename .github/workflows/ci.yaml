@@ -27,7 +27,7 @@ jobs:
           uv run pyright
           uv run ruff check
           uv build
-  test-release:
+  release:
     needs: ci
     runs-on: ubuntu-latest
     environment: release
@@ -39,8 +39,8 @@ jobs:
       - run: |
           uv python install 3.13
           uv build --sdist --wheel
-          rm dist/.gitignore || true  # https://github.com/astral-sh/uv/issues/11652
+          rm -vf dist/.gitignore  # https://github.com/astral-sh/uv/issues/11652
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
-          verbose: true
+      - uses: pypa/gh-action-pypi-publish@release/v1
