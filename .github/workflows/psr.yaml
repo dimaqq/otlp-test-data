@@ -1,9 +1,17 @@
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  psr:
+  test-psr:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: python-semantic-release/python-semantic-release@v9
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+      - run: uvx --from python-semantic-release psr -v -v -v version
