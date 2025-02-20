@@ -11,11 +11,15 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.8, 3.9, "3.10", 3.11, 3.12, 3.13, 3.13t, 3.14]
+        dep-versions: [--frozen, "--resolution lowest", "--resolution highest"]
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - run: uv python install ${{ matrix.python-version }}
-      - run: uv run pytest
-      - run: uv run pyright
-      - run: uv run ruff
-      - run: uv build
+      - run: |
+        uv python install ${{ matrix.python-version }}
+        uv sync --all-groups ${{ matrix.dep-versions }}
+        uv pip install .
+        uv run pytest
+        uv run pyright
+        uv run ruff check
+        uv build
