@@ -38,8 +38,8 @@ jobs:
       - uses: astral-sh/setup-uv@v5
       - run: |
           uv python install 3.13
-          uv build
-          ls -halt dist
+          uv build --sdist --wheel
+          rm dist/.gitignore || true  # https://github.com/astral-sh/uv/issues/11652
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
