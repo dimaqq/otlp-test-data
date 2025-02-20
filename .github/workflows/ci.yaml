@@ -39,6 +39,8 @@ jobs:
       - run: |
           uv python install 3.13
           uv build
+          ls -halt dist
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+          verbose: true
