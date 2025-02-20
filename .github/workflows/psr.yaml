@@ -1,0 +1,9 @@
+on:
+  push:
+    branches: [main]
+
+jobs:
+  psr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: python-semantic-release/python-semantic-release@v9
