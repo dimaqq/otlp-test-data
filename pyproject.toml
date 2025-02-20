@@ -50,5 +50,5 @@ version_variables = ["pyproject.toml:project.version"]
 
 [tool.semantic_release.changelog]
 changelog_file = "changelog.md"
-exclude_commit_patterns = ["ci", "test"]
+exclude_commit_patterns = ["ci", "test", "chore(deps)"]
 mode = "update"

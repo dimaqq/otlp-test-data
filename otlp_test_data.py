@@ -31,17 +31,18 @@ class Config:
 time = None
 
 
-def sample_proto(config: Config) -> bytes:
+def sample_proto(config: Config | None) -> bytes:
     return _proto_to_bytes(_spans_to_proto_object(sample_spans(config)))
 
 
-def sample_json(config: Config) -> bytes:
+def sample_json(config: Config | None) -> bytes:
     return _proto_to_json(_spans_to_proto_object(sample_spans(config)))
 
 
-def sample_spans(config: Config) -> Sequence[ReadableSpan]:
+def sample_spans(config: Config | None) -> Sequence[ReadableSpan]:
     """Creates and finishes two spans, then returns them as a list."""
     global time
+    config = config or Config()
     tracer_provider = TracerProvider()
     exporter = InMemorySpanExporter()
     tracer_provider.add_span_processor(SimpleSpanProcessor(exporter))
