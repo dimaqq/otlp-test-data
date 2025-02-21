@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [disabled-main]
+    branches: [main]
 
 jobs:
   test-psr:
