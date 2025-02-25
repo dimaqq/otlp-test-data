@@ -4,9 +4,10 @@ Produces OTLP data using OTEL instrumentation.
 
 ### Features
 
-- fixed, configurable timestamps
+- Fixed, configurable timestamps
 - aims to cover as much of OTEL API as possible
-- aims to cover all valid data types
+- Cover all valid data types
+- Events
 
 ### Limitations
 
@@ -15,7 +16,8 @@ Produces OTLP data using OTEL instrumentation.
 
 ### TODO
 
-- Events
 - Links
 - Baggage
 - Schemata, when https://github.com/open-telemetry/opentelemetry-python/pull/4359 lands
+- Attribute value type coercion, e.g. `class Str(str): ...` and objects with `__str__(self)`.
+- Exceptions

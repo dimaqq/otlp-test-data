@@ -1,6 +1,6 @@
 [project]
 name = "otlp-test-data"
-version = "0.9.4"
+version = "0.10.0"
 description = "Produces OTLP data using OTEL instrumentation"
 requires-python = ">=3.8"
 # https://github.com/astral-sh/uv/issues/4204
