@@ -52,6 +52,11 @@ def sample_spans(config: Config | None = None) -> Sequence[ReadableSpan]:
         random.seed(config.random_seed)
 
         # FIXME the workload section is expected to grow a lot
+        # TODO: attributes
+        # bool, int, float, str
+        # list[bool], ...
+        # tuple[bool], ...
+        # Sequence[bool], ... (maybe)
         with tracer.start_as_current_span("span-one"):
             time.tick()
         with tracer.start_as_current_span("span-two"):

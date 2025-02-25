@@ -1,6 +1,6 @@
 [project]
 name = "otlp-test-data"
-version = "0.9.3"
+version = "0.9.4"
 description = "Produces OTLP data using OTEL instrumentation"
 requires-python = ">=3.8"
 # https://github.com/astral-sh/uv/issues/4204
@@ -47,6 +47,9 @@ dev = [
 testing = [
     "pytest ~= 8.3.4",
 ]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.semantic_release]
 version_variables = ["pyproject.toml:project.version"]
