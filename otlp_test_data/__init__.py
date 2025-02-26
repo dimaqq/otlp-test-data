@@ -110,10 +110,10 @@ def _proto_to_json(data: Message) -> bytes:
 
 def workload():
     series_of_spans()
-    # nested_spans()
-    # attribute_types()
-    # repeated_attributes()
-    # events()
+    nested_spans()
+    attribute_types()
+    repeated_attributes()
+    events()
 
 
 def series_of_spans():
