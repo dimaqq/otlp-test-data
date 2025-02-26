@@ -1,6 +1,6 @@
 [project]
 name = "otlp-test-data"
-version = "0.11.0"
+version = "0.11.1"
 description = "Produces OTLP data using OTEL instrumentation"
 requires-python = ">=3.8"
 # https://github.com/astral-sh/uv/issues/4204
@@ -39,6 +39,10 @@ dependencies = [
     "grpcio >= 1.66.2, < 2.0.0; python_version >= '3.13'",
 ]
 
+[project.urls]
+"Repository" = "https://github.com/dimaqq/otlp-test-data"
+"Issues" = "https://github.com/dimaqq/otlp-test-data/issues"
+
 [dependency-groups]
 dev = [
     "pyright ~= 1.1",
@@ -47,6 +51,7 @@ dev = [
 testing = [
     "pytest ~= 8.3.4",
 ]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
