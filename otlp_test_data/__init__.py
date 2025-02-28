@@ -105,6 +105,12 @@ def _proto_to_json(data: Message) -> bytes:
                     "SPAN_KIND_PRODUCER": 4,
                     "SPAN_KIND_CONSUMER": 5,
                 }[sp["kind"]]
+                if status := sp["status"]:
+                    status["code"] = {
+                        "STATUS_CODE_UNSET": 0,
+                        "STATUS_CODE_OK": 1,
+                        "STATUS_CODE_ERROR": 2,
+                    }[status["code"]]
 
     return json.dumps(dic).encode("utf-8")
 
@@ -199,7 +205,7 @@ def instrumentation_scopes():
             "string": "cheese",
             "bytes": b"bb",
             "empty-list": [],
-            "empty-dict": {},  # type: ignore
+            # "empty-dict": {},  # not allowed for instrumentation scopes
         },
     )
 

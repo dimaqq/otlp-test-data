@@ -8,7 +8,18 @@ def test_spans():
 
 
 def test_json():
-    assert json.loads(sample_json())
+    data = sample_json()
+    assert json.loads(data)
+    # Ensure that all enum labels have been converted to ints
+    assert b"SPAN_KIND_" not in data
+    assert b"SPAN_FLAGS_" not in data
+    assert b"STATUS_CODE_" not in data
+    # Metrics
+    assert b"AGGREGATION_TEMPORALITY_" not in data
+    assert b"DATA_POINT_FLAGS_" not in data
+    # Logs
+    assert b"SEVERITY_NUMBER_" not in data
+    assert b"LOG_RECORD_FLAGS_" not in data
 
 
 def test_proto():
