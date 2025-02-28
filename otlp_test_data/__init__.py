@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import dataclasses
 import json
+import logging
 import random
 from typing import Sequence, TYPE_CHECKING
 from typing_extensions import reveal_type as reveal_type  # temp
@@ -114,6 +115,14 @@ def workload():
     attribute_types()
     repeated_attributes()
     events()
+    instrumentation_scopes()
+    with_exception()
+    with_logs()
+    # TODO: status that's not an OK status
+    # TODO: captured logs
+    # TODO: example exception traceback
+    # TODO: instrumentation scope with a version
+    # TODO: instrumentation scope with attributes
 
 
 def series_of_spans():
@@ -138,24 +147,74 @@ def outer():
 
 
 @tracer.start_as_current_span("inner")
-def inner():
+def inner() -> None:
     opentelemetry.trace.get_current_span().set_attribute("an-attribute", 42)
     time.tick()
+
+
+@tracer.start_as_current_span("with-exc-outer")
+def with_exception() -> None:
+    try:
+        with tracer.start_as_current_span("with-exc-inner"):
+            1 / 0  # type: ignore
+    except Exception:
+        pass
+
+
+@tracer.start_as_current_span("with-logs")
+def with_logs() -> None:
+    logging.warning("sss")
+    time.tick()
+    logging.warning("sss-sss")
+    time.tick()
+    logging.warning("sss-sss-sss")
 
 
 def attribute_types():
     with tracer.start_as_current_span("attribute-types") as span:
         span.set_attributes(
-            {"int": 42, "bool": False, "float": 3.14, "str": "string-cheese"}
+            {"int": 42, "bool": False, "float": 3.14, "str": "cheese", "bytes": b"bb"}
         )
         span.set_attributes(
             {
                 "ints": [1, 42],
                 "bools": [True, False],
                 "floats": [2.72, 3.14],
-                "strs": ["string-cheese", "strung-cheese"],
+                "strs": ["cheese", "mozzarella"],
+                "byteses": [b"aa", b"bb"],  # type: ignore
             }
         )
+
+
+def instrumentation_scopes():
+    tracer1 = opentelemetry.trace.get_tracer("one", "1.2.3")
+    tracer2 = opentelemetry.trace.get_tracer("one", "2.7.18")
+    tracer3 = opentelemetry.trace.get_tracer(
+        "one",
+        "3.14.0a5",
+        attributes={
+            "bool": True,
+            "int": 42,
+            "float": -12.34,
+            "string": "cheese",
+            "bytes": b"bb",
+            "empty-list": [],
+            "empty-dict": {},  # type: ignore
+        },
+    )
+
+    with tracer1.start_as_current_span("1.1"):
+        time.tick()
+    with tracer2.start_as_current_span("2.1"):
+        time.tick()
+    with tracer1.start_as_current_span("1.2"):
+        time.tick()
+    with tracer1.start_as_current_span("1.3"):
+        time.tick()
+    with tracer3.start_as_current_span("3.1"):
+        time.tick()
+    with tracer1.start_as_current_span("1.4"):
+        time.tick()
 
 
 def repeated_attributes():
