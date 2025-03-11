@@ -42,6 +42,13 @@ class Config:
 time: freezegun.api.FrozenDateTimeFactory = None  # type: ignore
 
 
+class LogsToEvents(logging.Handler):
+    def emit(self, record):
+        span = opentelemetry.trace.get_current_span()
+        if span and span.is_recording():
+            span.add_event(record.getMessage(), {"severity": record.levelname})
+
+
 def sample_proto(config: Config | None = None) -> bytes:
     return _proto_to_bytes(_spans_to_proto_object(sample_spans(config)))
 
@@ -54,6 +61,9 @@ def sample_spans(config: Config | None = None) -> Sequence[ReadableSpan]:
     """Creates and finishes two spans, then returns them as a list."""
     global time
     config = config or Config()
+    logging.basicConfig(level="DEBUG")
+    if not any(isinstance(h, LogsToEvents) for h in logging.root.handlers):
+        logging.root.addHandler(LogsToEvents())
     resource = Resource.create(
         attributes={
             "service.namespace": "1234-1234",  # a unique id
