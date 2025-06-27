@@ -1,6 +1,6 @@
 [project]
 name = "otlp-test-data"
-version = "1.0.0"
+version = "1.0.1"
 description = "Produces OTLP data using OTEL instrumentation"
 requires-python = ">=3.8"
 license = {text = "Apache License (2.0)"}
