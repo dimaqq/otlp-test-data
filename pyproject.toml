@@ -33,10 +33,9 @@ dependencies = [
     "opentelemetry-api ~= 1.30",
     "opentelemetry-exporter-otlp ~= 1.30",
     "opentelemetry-exporter-otlp-proto-http ~= 1.30",
-    # Hand-crafted grpcio/Python compatibility table
-    "grpcio >= 1.66.2, < 2.0; python_version >= '3.13'",
-    "grpcio >= 1.75.1, < 2.0; python_version >= '3.14'",
 ]
+[tool.uv]
+exclude-dependencies = ["grpcio"]
 
 [project.urls]
 "Repository" = "https://github.com/dimaqq/otlp-test-data"
