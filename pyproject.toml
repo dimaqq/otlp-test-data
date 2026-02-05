@@ -1,6 +1,6 @@
 [project]
 name = "otlp-test-data"
-version = "1.0.1"
+version = "1.0.2"
 description = "Produces OTLP data using OTEL instrumentation"
 requires-python = ">=3.8"
 license = {text = "Apache License (2.0)"}
@@ -33,9 +33,9 @@ dependencies = [
     "opentelemetry-api ~= 1.30",
     "opentelemetry-exporter-otlp ~= 1.30",
     "opentelemetry-exporter-otlp-proto-http ~= 1.30",
-    # Work around https://github.com/grpc/grpc/issues/38790
-    # grpcio is a transient dep of exporters above
-    "grpcio >= 1.66.2, < 2.0.0; python_version >= '3.13'",
+    # Hand-crafted grpcio/Python compatibility table
+    "grpcio >= 1.66.2, < 2.0; python_version >= '3.13'",
+    "grpcio >= 1.75.1, < 2.0; python_version >= '3.14'",
 ]
 
 [project.urls]
